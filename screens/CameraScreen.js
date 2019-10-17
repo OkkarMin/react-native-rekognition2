@@ -8,6 +8,9 @@ import CameraToolbar from '../components/CameraToolbar'
 const { width: winWidth, height: winHeight } = Dimensions.get('window')
 
 export default class CameraPage extends React.Component {
+  static navigationOptions = {
+    header: null
+  }
   camera = null
 
   state = {
@@ -27,7 +30,7 @@ export default class CameraPage extends React.Component {
   }
 
   handleShortCapture = async () => {
-    const photoData = await this.camera.takePictureAsync()
+    const photoData = await this.camera.takePictureAsync({ base64: true })
     this.setState({
       capturing: false,
       captures: [photoData, ...this.state.captures]
@@ -80,7 +83,7 @@ export default class CameraPage extends React.Component {
         {/* For Gallery Preview */}
         {/* {captures.length > 0 && <Gallery captures={captures} />} */}
 
-        <Toolbar
+        <CameraToolbar
           capturing={capturing}
           flashMode={flashMode}
           cameraType={cameraType}

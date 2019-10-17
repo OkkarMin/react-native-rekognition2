@@ -14,7 +14,7 @@ export default LinksScreen = props => {
        * we just wanted to provide you with some helpful links.
        */}
       <ExpoLinksView />
-      <Text>{params.name}</Text>
+      <Text>{params}</Text>
     </ScrollView>
   )
 }
