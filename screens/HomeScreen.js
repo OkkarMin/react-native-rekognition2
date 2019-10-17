@@ -50,7 +50,6 @@ export default HomeScreen = props => {
 HomeScreen.navigationOptions = {
   title: 'Home',
   headerStyle: {
-    color: 'white',
     backgroundColor: Colors.background
   },
   headerTintColor: Colors.header

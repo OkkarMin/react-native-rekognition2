@@ -21,7 +21,8 @@ GroupScreen.navigationOptions = {
   title: 'Groups',
   headerStyle: {
     backgroundColor: Colors.background
-  }
+  },
+  headerTintColor: Colors.header
 }
 
 const styles = StyleSheet.create({
