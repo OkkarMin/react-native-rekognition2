@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { StyleSheet, Text, View, FlatList } from 'react-native'
+import { FlatList, Text, View, StyleSheet } from 'react-native'
 
 import GroupCard from '../components/GroupCard'
 import Colors from '../constants/Colors'
@@ -23,7 +23,7 @@ export default HomeScreen = props => {
 
     console.log(courseCode, acadYear, semester, groupID)
 
-    navigate('Links', {
+    navigate('Group', {
       name: `${courseCode}/${acadYear}/${semester}/${groupID}`
     })
   }
