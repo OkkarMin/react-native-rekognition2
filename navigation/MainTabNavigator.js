@@ -7,12 +7,14 @@ import {
 import TabBarIcon from '../components/TabBarIcon'
 import HomeScreen from '../screens/HomeScreen'
 import GroupScreen from '../screens/GroupScreen'
+import CameraScreen from '../screens/CameraScreen'
 import LinksScreen from '../screens/LinksScreen'
 import SettingsScreen from '../screens/SettingsScreen'
 import Colors from '../constants/Colors'
 
 const HomeStack = createStackNavigator({
   Home: HomeScreen,
+  Camera: CameraScreen,
   Group: GroupScreen
 })
 

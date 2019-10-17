@@ -23,7 +23,7 @@ export default HomeScreen = props => {
 
     console.log(courseCode, acadYear, semester, groupID)
 
-    navigate('Group', {
+    navigate('Camera', {
       name: `${courseCode}/${acadYear}/${semester}/${groupID}`
     })
   }
