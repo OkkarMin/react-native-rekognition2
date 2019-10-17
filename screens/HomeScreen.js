@@ -1,14 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import {
-  Image,
-  Platform,
-  ScrollView,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-  FlatList
-} from 'react-native'
+import { StyleSheet, Text, View, FlatList } from 'react-native'
 
 import GroupCard from '../components/GroupCard'
 import Colors from '../constants/Colors'
@@ -23,7 +14,7 @@ export default HomeScreen = props => {
     setCourses(groupsMockData)
   }, [])
 
-  handleCardPress = collectionName => {
+  handleGroupCardPress = collectionName => {
     let arr = upperCaseArray(collectionName)
     let courseCode = arr[0]
     let acadYear = 2019
@@ -47,7 +38,7 @@ export default HomeScreen = props => {
         <FlatList
           data={courses}
           renderItem={({ item }) => (
-            <GroupCard details={item} onPress={handleCardPress} />
+            <GroupCard details={item} onPress={handleGroupCardPress} />
           )}
           keyExtractor={item => item.collectionName}
         />
