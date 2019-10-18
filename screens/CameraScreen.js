@@ -3,6 +3,7 @@ import { View, Text, Dimensions, StyleSheet } from 'react-native'
 import { Camera } from 'expo-camera'
 import * as Permissions from 'expo-permissions'
 
+import CameraGallery from '../components/CameraGallery'
 import CameraToolbar from '../components/CameraToolbar'
 
 const { width: winWidth, height: winHeight } = Dimensions.get('window')
@@ -81,7 +82,7 @@ export default class CameraPage extends React.Component {
         </View>
 
         {/* For Gallery Preview */}
-        {captures.length > 0 && <Gallery captures={captures} />}
+        {captures.length > 0 && <CameraGallery captures={captures} />}
 
         <CameraToolbar
           capturing={capturing}

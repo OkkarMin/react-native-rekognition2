@@ -1,7 +1,11 @@
 import React from 'react'
-import { View, Image, ScrollView, StyleSheet } from 'react-native'
+import { View, Image, ScrollView, StyleSheet, Dimensions } from 'react-native'
 
-import styles from './styles'
+import TouchableIcon from './TouchableIcon'
+
+import Colors from '../constants/Colors'
+
+const { width: winWidth } = Dimensions.get('window')
 
 export default ({ captures = [] }) => (
   <ScrollView
@@ -13,6 +17,13 @@ export default ({ captures = [] }) => (
         <Image source={{ uri }} style={styles.galleryImage} />
       </View>
     ))}
+    <TouchableIcon
+      iconName="ios-checkmark-circle"
+      iconColor={Colors.success}
+      iconSize={60}
+      iconStyle={styles.checkMarkIcon}
+      onPress={() => console.log('Rekognize')}
+    />
   </ScrollView>
 )
 
@@ -34,5 +45,8 @@ const styles = StyleSheet.create({
   galleryImage: {
     width: 75,
     height: 75
+  },
+  checkMarkIcon: {
+    top: 7
   }
 })

@@ -10,7 +10,9 @@ import {
   StyleSheet
 } from 'react-native'
 
-const { width: winWidth, height: winHeight } = Dimensions.get('window')
+import Colors from '../constants/Colors'
+
+const { width: winWidth } = Dimensions.get('window')
 const { FlashMode: CameraFlashModes, Type: CameraTypes } = Camera.Constants
 
 export default CameraToolbar = ({
@@ -104,7 +106,7 @@ const styles = StyleSheet.create({
     height: 76,
     borderWidth: 2,
     borderRadius: 76,
-    backgroundColor: 'red',
+    backgroundColor: Colors.primary,
     borderColor: 'transparent'
   }
 })
