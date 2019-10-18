@@ -81,7 +81,7 @@ export default class CameraPage extends React.Component {
         </View>
 
         {/* For Gallery Preview */}
-        {/* {captures.length > 0 && <Gallery captures={captures} />} */}
+        {captures.length > 0 && <Gallery captures={captures} />}
 
         <CameraToolbar
           capturing={capturing}
