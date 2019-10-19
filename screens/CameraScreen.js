@@ -1,5 +1,5 @@
-import React from 'react'
-import { View, Text, Dimensions, StyleSheet } from 'react-native'
+import React, { useState } from 'react'
+import { View, Text, Platform, Dimensions, StyleSheet } from 'react-native'
 import { Camera } from 'expo-camera'
 import * as Permissions from 'expo-permissions'
 
@@ -15,6 +15,7 @@ export default class CameraPage extends React.Component {
   camera = null
 
   state = {
+    ratio: '4:3',
     captures: [],
     capturing: null,
     hasCameraPermission: null,
@@ -53,6 +54,13 @@ export default class CameraPage extends React.Component {
       camera.status === 'granted' && audio.status === 'granted'
 
     this.setState({ hasCameraPermission })
+
+    if (Platform.OS === 'android') {
+      let ratioArray = await this.camera.getSupportedRatiosAsync()
+      let ratio = ratioArray[ratioArray.length - 1]
+
+      this.setState({ ratio })
+    }
   }
 
   render() {
@@ -61,7 +69,8 @@ export default class CameraPage extends React.Component {
       flashMode,
       cameraType,
       capturing,
-      captures
+      captures,
+      ratio
     } = this.state
 
     if (hasCameraPermission === null) {
@@ -78,7 +87,7 @@ export default class CameraPage extends React.Component {
             flashMode={flashMode}
             style={styles.preview}
             ref={camera => (this.camera = camera)}
-            ratio="16:9"
+            ratio={ratio}
           />
         </View>
 
