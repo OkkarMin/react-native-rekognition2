@@ -5,21 +5,21 @@ import {
 } from 'react-navigation'
 
 import TabBarIcon from '../components/TabBarIcon'
-import HomeScreen from '../screens/HomeScreen'
-import GroupScreen from '../screens/GroupScreen'
+import TakeAttendanceScreen from '../screens/TakeAttendanceScreen'
 import CameraScreen from '../screens/CameraScreen'
-import LinksScreen from '../screens/LinksScreen'
-import SettingsScreen from '../screens/SettingsScreen'
+import GroupScreen from '../screens/GroupScreen'
+import ViewAttendanceScreen from '../screens/ViewAttendanceScreen'
+import ProfileScreen from '../screens/ProfileScreen'
 import Colors from '../constants/Colors'
 
-const HomeStack = createStackNavigator({
-  Home: HomeScreen,
-  Camera: CameraScreen,
-  Group: GroupScreen
+const TakeAttendanceStack = createStackNavigator({
+  TakeAttendance: TakeAttendanceScreen,
+  Group: GroupScreen,
+  Camera: CameraScreen
 })
 
-HomeStack.navigationOptions = {
-  tabBarLabel: 'Home',
+TakeAttendanceStack.navigationOptions = {
+  tabBarLabel: 'Take Attendance',
   tabBarOptions: {
     activeTintColor: Colors.primary,
     inactiveTintColor: Colors.tabIconDefault,
@@ -27,15 +27,17 @@ HomeStack.navigationOptions = {
       backgroundColor: Colors.background2
     }
   },
-  tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="md-home" />
+  tabBarIcon: ({ focused }) => (
+    <TabBarIcon focused={focused} name="ios-create" />
+  )
 }
 
-const LinksStack = createStackNavigator({
-  Links: LinksScreen
+const ViewAttendanceStack = createStackNavigator({
+  ViewAttendance: ViewAttendanceScreen
 })
 
-LinksStack.navigationOptions = {
-  tabBarLabel: 'Camera',
+ViewAttendanceStack.navigationOptions = {
+  tabBarLabel: 'View Attendance',
   tabBarOptions: {
     activeTintColor: Colors.primary,
     inactiveTintColor: Colors.tabIconDefault,
@@ -43,14 +45,14 @@ LinksStack.navigationOptions = {
       backgroundColor: Colors.background2
     }
   },
-  tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="md-camera" />
+  tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="ios-list" />
 }
 
-const SettingsStack = createStackNavigator({
-  Settings: SettingsScreen
+const ProfileStack = createStackNavigator({
+  Profile: ProfileScreen
 })
 
-SettingsStack.navigationOptions = {
+ProfileStack.navigationOptions = {
   tabBarLabel: 'Profile',
   tabBarOptions: {
     activeTintColor: Colors.primary,
@@ -65,9 +67,9 @@ SettingsStack.navigationOptions = {
 }
 
 const tabNavigator = createBottomTabNavigator({
-  HomeStack,
-  LinksStack,
-  SettingsStack
+  TakeAttendanceStack,
+  ViewAttendanceStack,
+  ProfileStack
 })
 
 export default tabNavigator

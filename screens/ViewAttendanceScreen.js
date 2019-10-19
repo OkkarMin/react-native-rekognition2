@@ -6,7 +6,7 @@ import Colors from '../constants/Colors'
 import groupsMockData from '../mock/Groups'
 import { upperCaseArray } from '../utils/utils'
 
-export default HomeScreen = props => {
+export default ViewAttendanceScreen = props => {
   const { navigate } = props.navigation
   const [courses, setCourses] = useState(null)
 
@@ -47,18 +47,14 @@ export default HomeScreen = props => {
   )
 }
 
-HomeScreen.navigationOptions = {
-  title: 'Home',
-  headerStyle: {
-    backgroundColor: Colors.background
-  },
-  headerTintColor: Colors.header
+ViewAttendanceScreen.navigationOptions = {
+  header: null
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: 15,
+    paddingTop: 25,
     paddingHorizontal: 15,
     backgroundColor: Colors.background
   },

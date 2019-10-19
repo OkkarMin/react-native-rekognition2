@@ -11,6 +11,6 @@ export default createAppContainer(
       Login: LoginStack,
       Main: MainTabNavigator
     },
-    { initialRouteName: 'Login' }
+    { initialRouteName: 'Main' }
   )
 )
