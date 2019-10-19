@@ -1,4 +1,5 @@
 export default [
+  { name: 'Students', collectionName: 'Students' },
   {
     name: 'Algorithms',
     collectionName: 'CZ2000Yr2019Sem1LEC1'
