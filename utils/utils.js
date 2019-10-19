@@ -24,7 +24,7 @@ export const postData = async (url, endpoint, payload) => {
       body: JSON.stringify(payload)
     })
 
-    return await response.text()
+    return await response.json()
   } catch (error) {
     console.log(error)
   }
