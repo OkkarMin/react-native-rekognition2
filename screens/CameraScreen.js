@@ -78,6 +78,7 @@ export default class CameraPage extends React.Component {
             flashMode={flashMode}
             style={styles.preview}
             ref={camera => (this.camera = camera)}
+            ratio="16:9"
           />
         </View>
 
