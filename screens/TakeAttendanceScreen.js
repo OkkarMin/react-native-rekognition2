@@ -1,10 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { FlatList, Text, View, StyleSheet } from "react-native";
 
+<<<<<<< HEAD
 import GroupCard from "../components/GroupCard";
 import Colors from "../constants/Colors";
 import groupsMockData from "../mock/Groups";
 import { upperCaseArray } from "../utils/utils";
+=======
+import GroupCard from '../components/GroupCard'
+import Colors from '../constants/Colors'
+import groupsMockData from '../mock/Groups'
+>>>>>>> 6b675b26eeb86f15a0226878aad7906450836989
 
 export default TakeAttendanceScreen = props => {
   const { navigate } = props.navigation;
@@ -14,6 +20,7 @@ export default TakeAttendanceScreen = props => {
     setCourses(groupsMockData);
   }, []);
 
+<<<<<<< HEAD
   handleGroupCardPress = collectionName => {
     let arr = upperCaseArray(collectionName);
     let courseCode = arr[0];
@@ -25,6 +32,10 @@ export default TakeAttendanceScreen = props => {
       name: `${courseCode}/${acadYear}/${semester}/${groupID}`
     });
   };
+=======
+  handleGroupCardPress = collectionName =>
+    navigate('Camera', { collectionName })
+>>>>>>> 6b675b26eeb86f15a0226878aad7906450836989
 
   return (
     <View style={styles.container}>

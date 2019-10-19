@@ -7,7 +7,7 @@ import Colors from '../constants/Colors'
 
 const { width: winWidth } = Dimensions.get('window')
 
-export default ({ captures = [] }) => (
+export default ({ captures = [], onCheckMarkPress, collectionEndpoint }) => (
   <ScrollView
     horizontal={true}
     style={[styles.bottomToolbar, styles.galleryContainer]}
@@ -22,7 +22,7 @@ export default ({ captures = [] }) => (
       iconColor={Colors.success}
       iconSize={60}
       iconStyle={styles.checkMarkIcon}
-      onPress={() => console.log('Rekognize')}
+      onPress={() => onCheckMarkPress(collectionEndpoint)}
     />
   </ScrollView>
 )

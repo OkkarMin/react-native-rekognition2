@@ -30,10 +30,13 @@ export const postData = async (url, endpoint, payload) => {
   }
 }
 
-export const detectFacesFromAWSCollection = async (collectionName, image) => {
+export const detectFacesFromAWSCollection = async (
+  collectionName,
+  imageInBase64
+) => {
   let payload = {
     collectionName,
-    image
+    image: imageInBase64
   }
 
   let result = await postData(

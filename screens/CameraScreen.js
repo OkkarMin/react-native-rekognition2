@@ -1,10 +1,11 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { View, Text, Platform, Dimensions, StyleSheet } from 'react-native'
 import { Camera } from 'expo-camera'
 import * as Permissions from 'expo-permissions'
 
 import CameraGallery from '../components/CameraGallery'
 import CameraToolbar from '../components/CameraToolbar'
+import { detectFacesFromAWSCollection } from '../utils/utils'
 
 const { width: winWidth, height: winHeight } = Dimensions.get('window')
 
@@ -47,6 +48,18 @@ export default class CameraPage extends React.Component {
     })
   }
 
+  detectFacesFromCaptures = async collectionName => {
+    let result = []
+
+    this.state.captures.map(async image => {
+      let response = await detectFacesFromAWSCollection(
+        collectionName,
+        image['base64']
+      )
+      console.log(response)
+    })
+  }
+
   async componentDidMount() {
     const camera = await Permissions.askAsync(Permissions.CAMERA)
     const audio = await Permissions.askAsync(Permissions.AUDIO_RECORDING)
@@ -73,6 +86,8 @@ export default class CameraPage extends React.Component {
       ratio
     } = this.state
 
+    const collectionName = this.props.navigation.state.params['collectionName']
+
     if (hasCameraPermission === null) {
       return <View />
     } else if (hasCameraPermission === false) {
@@ -92,7 +107,13 @@ export default class CameraPage extends React.Component {
         </View>
 
         {/* For Gallery Preview */}
-        {captures.length > 0 && <CameraGallery captures={captures} />}
+        {captures.length > 0 && (
+          <CameraGallery
+            captures={captures}
+            collectionEndpoint={collectionName}
+            onCheckMarkPress={this.detectFacesFromCaptures}
+          />
+        )}
 
         <CameraToolbar
           capturing={capturing}
