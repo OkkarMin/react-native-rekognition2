@@ -1,32 +1,30 @@
-import React, { useState, useEffect } from 'react'
-import { FlatList, Text, View, StyleSheet } from 'react-native'
+import React, { useState, useEffect } from "react";
+import { FlatList, Text, View, StyleSheet } from "react-native";
 
-import GroupCard from '../components/GroupCard'
-import Colors from '../constants/Colors'
-import groupsMockData from '../mock/Groups'
-import { upperCaseArray } from '../utils/utils'
+import GroupCard from "../components/GroupCard";
+import Colors from "../constants/Colors";
+import groupsMockData from "../mock/Groups";
+import { upperCaseArray } from "../utils/utils";
 
 export default TakeAttendanceScreen = props => {
-  const { navigate } = props.navigation
-  const [courses, setCourses] = useState(null)
+  const { navigate } = props.navigation;
+  const [courses, setCourses] = useState(null);
 
   useEffect(() => {
-    setCourses(groupsMockData)
-  }, [])
+    setCourses(groupsMockData);
+  }, []);
 
   handleGroupCardPress = collectionName => {
-    let arr = upperCaseArray(collectionName)
-    let courseCode = arr[0]
-    let acadYear = 2019
-    let semester = 1
-    let groupID = arr[3]
+    let arr = upperCaseArray(collectionName);
+    let courseCode = arr[0];
+    let acadYear = 2019;
+    let semester = 1;
+    let groupID = arr[3];
 
-    console.log(courseCode, acadYear, semester, groupID)
-
-    navigate('Camera', {
+    navigate("Camera", {
       name: `${courseCode}/${acadYear}/${semester}/${groupID}`
-    })
-  }
+    });
+  };
 
   return (
     <View style={styles.container}>
@@ -44,12 +42,12 @@ export default TakeAttendanceScreen = props => {
         />
       )}
     </View>
-  )
-}
+  );
+};
 
 TakeAttendanceScreen.navigationOptions = {
   header: null
-}
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -60,7 +58,7 @@ const styles = StyleSheet.create({
   },
   greetings: {
     fontSize: 15,
-    textAlign: 'center',
+    textAlign: "center",
     color: Colors.text
   }
-})
+});
