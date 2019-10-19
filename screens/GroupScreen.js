@@ -9,7 +9,11 @@ import {
   CollapseHeader,
   CollapseBody
 } from "accordion-collapse-react-native";
+<<<<<<< Updated upstream
 import { Thumbnail, List, ListItem, Separator } from "native-base";
+=======
+import { Separator } from "native-base";
+>>>>>>> Stashed changes
 
 export default GroupScreen = props => {
   const { navigation } = props;
@@ -19,6 +23,7 @@ export default GroupScreen = props => {
 
   useEffect(() => {
     let arr = upperCaseArray(navigation.state.params.name);
+    //let arr = upperCaseArray("CZ3002/2019/1/TSA1");
     let endPointURL = `/getGroupAttendance/${arr[0]}${arr[1]}`;
     fetchData(
       "http://ec2-3-15-165-103.us-east-2.compute.amazonaws.com/api",
@@ -34,7 +39,10 @@ export default GroupScreen = props => {
       let arr3 = arr[1].split("/");
       setCourseCodeNumber(arr2[0]);
       setGroupNumber(arr3[0]);
+<<<<<<< Updated upstream
       console.log(result);
+=======
+>>>>>>> Stashed changes
     });
   }, []);
 
@@ -57,7 +65,12 @@ export default GroupScreen = props => {
               renderItem={({ item }) => (
                 <ToggleButton
                   value={item.status == "Present"}
+<<<<<<< Updated upstream
                   matricNo={item.matricNo}
+=======
+                  data={item}
+                  courseCode={courseCodeNumber}
+>>>>>>> Stashed changes
                 />
               )}
               keyExtractor={item => item.matricNo}
@@ -79,7 +92,12 @@ export default GroupScreen = props => {
               renderItem={({ item }) => (
                 <ToggleButton
                   value={item.status != "Present"}
+<<<<<<< Updated upstream
                   matricNo={item.matricNo}
+=======
+                  data={item}
+                  courseCode={courseCodeNumber}
+>>>>>>> Stashed changes
                 />
               )}
               keyExtractor={item => item.matricNo}
