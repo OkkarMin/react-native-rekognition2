@@ -51,8 +51,12 @@ export default class CameraPage extends React.Component {
   detectFacesFromCaptures = async collectionName => {
     let result = []
 
-    this.state.captures.map(async imageInBase64 => {
-      detectFacesFromAWSCollection(collectionName, imageInBase64)
+    this.state.captures.map(async image => {
+      let response = await detectFacesFromAWSCollection(
+        collectionName,
+        image['base64']
+      )
+      console.log(response)
     })
   }
 

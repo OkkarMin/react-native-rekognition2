@@ -36,7 +36,7 @@ export const detectFacesFromAWSCollection = async (
 ) => {
   let payload = {
     collectionName,
-    imageInBase64
+    image: imageInBase64
   }
 
   let result = await postData(
