@@ -4,7 +4,6 @@ import { FlatList, Text, View, StyleSheet } from 'react-native'
 import GroupCard from '../components/GroupCard'
 import Colors from '../constants/Colors'
 import groupsMockData from '../mock/Groups'
-import { upperCaseArray } from '../utils/utils'
 
 export default TakeAttendanceScreen = props => {
   const { navigate } = props.navigation
@@ -14,19 +13,8 @@ export default TakeAttendanceScreen = props => {
     setCourses(groupsMockData)
   }, [])
 
-  handleGroupCardPress = collectionName => {
-    let arr = upperCaseArray(collectionName)
-    let courseCode = arr[0]
-    let acadYear = 2019
-    let semester = 1
-    let groupID = arr[3]
-
-    console.log(courseCode, acadYear, semester, groupID)
-
-    navigate('Camera', {
-      name: `${courseCode}/${acadYear}/${semester}/${groupID}`
-    })
-  }
+  handleGroupCardPress = collectionName =>
+    navigate('Camera', { collectionName })
 
   return (
     <View style={styles.container}>
