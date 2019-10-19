@@ -14,7 +14,10 @@ import * as ImageManipulator from 'expo-image-manipulator'
 
 import CameraGallery from '../components/CameraGallery'
 import CameraToolbar from '../components/CameraToolbar'
-import { detectFacesFromAWSCollection } from '../utils/utils'
+import {
+  detectFacesFromAWSCollection,
+  sendSMSToAbsentees
+} from '../utils/utils'
 import Colors from '../constants/Colors'
 
 const { width: winWidth, height: winHeight } = Dimensions.get('window')
@@ -82,7 +85,7 @@ export default class CameraPage extends React.Component {
     )
 
     this.setState({ captures: [], detecting: false })
-    console.log(result)
+    sendSMSToAbsentees(result)
   }
 
   async componentDidMount() {
