@@ -14,7 +14,6 @@ import Colors from '../constants/Colors'
 
 const TakeAttendanceStack = createStackNavigator({
   TakeAttendance: TakeAttendanceScreen,
-  Group: GroupScreen,
   Camera: CameraScreen
 })
 
@@ -33,7 +32,8 @@ TakeAttendanceStack.navigationOptions = {
 }
 
 const ViewAttendanceStack = createStackNavigator({
-  ViewAttendance: ViewAttendanceScreen
+  ViewAttendance: ViewAttendanceScreen,
+  Group: GroupScreen
 })
 
 ViewAttendanceStack.navigationOptions = {
