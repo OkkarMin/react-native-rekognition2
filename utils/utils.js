@@ -39,13 +39,17 @@ export const detectFacesFromAWSCollection = async (
     image: imageInBase64
   }
 
-  let result = await postData(
-    'http://ec2-3-15-165-103.us-east-2.compute.amazonaws.com/api',
-    '/detectFaces',
-    payload
-  )
+  try {
+    let result = await postData(
+      'http://ec2-3-15-165-103.us-east-2.compute.amazonaws.com/api',
+      '/detectFaces',
+      payload
+    )
 
-  return result
+    return result
+  } catch (error) {
+    console.log(error)
+  }
 }
 
 export const sendSMS = async (message, phoneNumber) => {

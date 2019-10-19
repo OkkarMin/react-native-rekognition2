@@ -1,5 +1,13 @@
 import React from 'react'
-import { View, Text, Platform, Dimensions, StyleSheet } from 'react-native'
+import {
+  View,
+  Text,
+  ActivityIndicator,
+  Platform,
+  Dimensions,
+  StyleSheet
+} from 'react-native'
+import { Overlay } from 'react-native-elements'
 import { Camera } from 'expo-camera'
 import * as Permissions from 'expo-permissions'
 import * as ImageManipulator from 'expo-image-manipulator'
@@ -7,6 +15,7 @@ import * as ImageManipulator from 'expo-image-manipulator'
 import CameraGallery from '../components/CameraGallery'
 import CameraToolbar from '../components/CameraToolbar'
 import { detectFacesFromAWSCollection } from '../utils/utils'
+import Colors from '../constants/Colors'
 
 const { width: winWidth, height: winHeight } = Dimensions.get('window')
 
@@ -19,9 +28,10 @@ export default class CameraPage extends React.Component {
   state = {
     ratio: '4:3',
     captures: [],
+    detecting: false,
     capturing: null,
     hasCameraPermission: null,
-    cameraType: Camera.Constants.Type.back,
+    cameraType: Camera.Constants.Type.front,
     flashMode: Camera.Constants.FlashMode.off
   }
 
@@ -58,6 +68,8 @@ export default class CameraPage extends React.Component {
   detectFacesFromCaptures = async collectionName => {
     let result = []
 
+    this.setState({ detecting: true })
+
     await Promise.all(
       this.state.captures.map(async image => {
         let response = await detectFacesFromAWSCollection(
@@ -69,6 +81,7 @@ export default class CameraPage extends React.Component {
       })
     )
 
+    this.setState({ captures: [], detecting: false })
     console.log(result)
   }
 
@@ -95,10 +108,12 @@ export default class CameraPage extends React.Component {
       cameraType,
       capturing,
       captures,
+      detecting,
       ratio
     } = this.state
 
-    const collectionName = this.props.navigation.state.params['collectionName']
+    const { navigation } = this.props
+    const collectionName = navigation.state.params['collectionName']
 
     if (hasCameraPermission === null) {
       return <View />
@@ -109,6 +124,18 @@ export default class CameraPage extends React.Component {
     return (
       <React.Fragment>
         <View>
+          <Overlay
+            isVisible={detecting}
+            windowBackgroundColor="rgba(255, 255, 255, .9)"
+            overlayBackgroundColor="rgba(0,0,0,.6)"
+            width="auto"
+            height="auto"
+          >
+            <React.Fragment>
+              <Text style={styles.overlayText}>Updating Attendance</Text>
+              <ActivityIndicator size="large" color="white" />
+            </React.Fragment>
+          </Overlay>
           <Camera
             type={cameraType}
             flashMode={flashMode}
@@ -152,5 +179,6 @@ const styles = StyleSheet.create({
     top: 0,
     right: 0,
     bottom: 0
-  }
+  },
+  overlayText: { fontSize: 20, marginBottom: 10, color: Colors.text }
 })
