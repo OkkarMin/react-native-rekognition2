@@ -1,25 +1,25 @@
-import React, { useState, useEffect } from 'react'
-import { FlatList, Text, View, StyleSheet } from 'react-native'
+import React, { useState, useEffect } from "react";
+import { FlatList, Text, View, StyleSheet } from "react-native";
 
-import GroupCard from '../components/GroupCard'
-import Colors from '../constants/Colors'
-import groupsMockData from '../mock/Groups'
+import GroupCard from "../components/GroupCard";
+import Colors from "../constants/Colors";
+import groupsMockData from "../mock/Groups";
 
 export default TakeAttendanceScreen = props => {
-  const { navigate } = props.navigation
-  const [courses, setCourses] = useState(null)
+  const { navigate } = props.navigation;
+  const [courses, setCourses] = useState(null);
 
   useEffect(() => {
-    setCourses(groupsMockData)
-  }, [])
+    setCourses(groupsMockData);
+  }, []);
 
   handleGroupCardPress = collectionName =>
-    navigate('Camera', { collectionName })
+    navigate("Camera", { collectionName });
 
   return (
     <View style={styles.container}>
       <Text style={styles.greetings}>
-        Welcome Professor [name] here are your courses
+        Welcome Professor! {"\n"} Here are your courses.
       </Text>
 
       {courses && (
@@ -32,12 +32,12 @@ export default TakeAttendanceScreen = props => {
         />
       )}
     </View>
-  )
-}
+  );
+};
 
 TakeAttendanceScreen.navigationOptions = {
   header: null
-}
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -47,8 +47,9 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.background
   },
   greetings: {
-    fontSize: 15,
-    textAlign: 'center',
+    fontSize: 25,
+    paddingTop: 10,
+    textAlign: "center",
     color: Colors.text
   }
-})
+});

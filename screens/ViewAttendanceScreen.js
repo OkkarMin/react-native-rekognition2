@@ -30,9 +30,7 @@ export default ViewAttendanceScreen = props => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.greetings}>
-        Welcome Professor [name] here are your courses
-      </Text>
+      <Text style={styles.greetings}>View Your Attendance</Text>
 
       {courses && (
         <FlatList
@@ -59,8 +57,9 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.background
   },
   greetings: {
-    fontSize: 15,
+    fontSize: 25,
     textAlign: "center",
+    paddingTop: 10,
     color: Colors.text
   }
 });

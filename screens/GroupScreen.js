@@ -1,12 +1,21 @@
 import React, { useState, useEffect } from "react";
-import { FlatList, Text, View, StyleSheet } from "react-native";
+import { FlatList, Text, View, StyleSheet, ScrollView } from "react-native";
 import ToggleButton from "../components/ToggleButton";
 import { fetchData, upperCaseArray } from "../utils/utils";
 import Colors from "../constants/Colors";
 
+import {
+  Collapse,
+  CollapseHeader,
+  CollapseBody
+} from "accordion-collapse-react-native";
+import { Thumbnail, List, ListItem, Separator } from "native-base";
+
 export default GroupScreen = props => {
   const { navigation } = props;
   const [attendanceList, setAttendance] = useState();
+  const [courseCodeNumber, setCourseCodeNumber] = useState();
+  const [groupNumber, setGroupNumber] = useState();
 
   useEffect(() => {
     let arr = upperCaseArray(navigation.state.params.name);
@@ -15,28 +24,70 @@ export default GroupScreen = props => {
       "http://ec2-3-15-165-103.us-east-2.compute.amazonaws.com/api",
       endPointURL
     ).then(result => {
+      result.sort((a, b) => {
+        return a.matricNo > b.matricNo;
+      });
       setAttendance(result);
+
+      let arr2 = arr[0];
+      arr2 = arr2.split("/");
+      let arr3 = arr[1].split("/");
+      setCourseCodeNumber(arr2[0]);
+      setGroupNumber(arr3[0]);
       console.log(result);
     });
   }, []);
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.greetings}>Attendance List</Text>
-
-      {attendanceList && (
-        <FlatList
-          data={attendanceList}
-          renderItem={({ item }) => (
-            <ToggleButton
-              value={item.status == "Present"}
-              matricNo={item.matricNo}
+    <ScrollView style={styles.container}>
+      <Text style={styles.greetings}>
+        Course Code: {courseCodeNumber} {"\n"} Group Number: {groupNumber}
+      </Text>
+      <Collapse>
+        <CollapseHeader>
+          <Separator bordered style={styles.cardContainer}>
+            <Text style={styles.collectionName}> 4 September 2019</Text>
+          </Separator>
+        </CollapseHeader>
+        <CollapseBody>
+          {attendanceList && (
+            <FlatList
+              style={styles.flatliststyle}
+              data={attendanceList}
+              renderItem={({ item }) => (
+                <ToggleButton
+                  value={item.status == "Present"}
+                  matricNo={item.matricNo}
+                />
+              )}
+              keyExtractor={item => item.matricNo}
             />
           )}
-          keyExtractor={item => item.matricNo}
-        />
-      )}
-    </View>
+        </CollapseBody>
+      </Collapse>
+      <Collapse>
+        <CollapseHeader>
+          <Separator bordered style={styles.cardContainer}>
+            <Text style={styles.collectionName}> 3 September 2019</Text>
+          </Separator>
+        </CollapseHeader>
+        <CollapseBody>
+          {attendanceList && (
+            <FlatList
+              style={styles.flatliststyle}
+              data={attendanceList}
+              renderItem={({ item }) => (
+                <ToggleButton
+                  value={item.status != "Present"}
+                  matricNo={item.matricNo}
+                />
+              )}
+              keyExtractor={item => item.matricNo}
+            />
+          )}
+        </CollapseBody>
+      </Collapse>
+    </ScrollView>
   );
 };
 
@@ -48,13 +99,17 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingTop: 25,
+    paddingBottom: 100,
     paddingHorizontal: 15,
     backgroundColor: Colors.background
   },
   greetings: {
-    fontSize: 15,
+    fontSize: 25,
     textAlign: "center",
     color: Colors.text
+  },
+  flatliststyle: {
+    marginBottom: 30
   },
   collectionName: { color: Colors.text, textAlign: "center", fontSize: 15 },
   details: {
@@ -64,5 +119,6 @@ const styles = StyleSheet.create({
     color: "#fff",
     alignSelf: "flex-start",
     width: "100%"
-  }
+  },
+  cardContainer: { backgroundColor: Colors.background2, height: 50 }
 });

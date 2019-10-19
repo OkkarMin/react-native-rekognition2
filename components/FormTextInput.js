@@ -1,8 +1,8 @@
-import React from 'react'
-import { Input, Icon } from 'react-native-elements'
+import React from "react";
+import { Input, Icon } from "react-native-elements";
 
 export default FormTextInput = props => {
-  const { placeholder, iconName, onChangeText } = props
+  const { placeholder, iconName, onChangeText } = props;
 
   return (
     <Input
@@ -10,8 +10,9 @@ export default FormTextInput = props => {
       placeholderTextColor="grey"
       leftIcon={<Icon name={iconName} type="font-awesome" color="white" />}
       paddingLeft="5%"
-      inputStyle={{ color: 'white' }}
+      inputStyle={{ color: "white" }}
       onChangeText={onChangeText}
+      {...props}
     />
-  )
-}
+  );
+};
