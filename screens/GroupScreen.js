@@ -9,11 +9,7 @@ import {
   CollapseHeader,
   CollapseBody
 } from "accordion-collapse-react-native";
-<<<<<<< Updated upstream
-import { Thumbnail, List, ListItem, Separator } from "native-base";
-=======
 import { Separator } from "native-base";
->>>>>>> Stashed changes
 
 export default GroupScreen = props => {
   const { navigation } = props;
@@ -39,10 +35,6 @@ export default GroupScreen = props => {
       let arr3 = arr[1].split("/");
       setCourseCodeNumber(arr2[0]);
       setGroupNumber(arr3[0]);
-<<<<<<< Updated upstream
-      console.log(result);
-=======
->>>>>>> Stashed changes
     });
   }, []);
 
@@ -65,12 +57,8 @@ export default GroupScreen = props => {
               renderItem={({ item }) => (
                 <ToggleButton
                   value={item.status == "Present"}
-<<<<<<< Updated upstream
-                  matricNo={item.matricNo}
-=======
                   data={item}
                   courseCode={courseCodeNumber}
->>>>>>> Stashed changes
                 />
               )}
               keyExtractor={item => item.matricNo}
@@ -92,12 +80,8 @@ export default GroupScreen = props => {
               renderItem={({ item }) => (
                 <ToggleButton
                   value={item.status != "Present"}
-<<<<<<< Updated upstream
-                  matricNo={item.matricNo}
-=======
                   data={item}
                   courseCode={courseCodeNumber}
->>>>>>> Stashed changes
                 />
               )}
               keyExtractor={item => item.matricNo}
