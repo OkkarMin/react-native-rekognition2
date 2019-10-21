@@ -69,6 +69,26 @@ export const detectFacesFromAWSCollection = async (
   }
 }
 
+export const updateAttendance = async studentData => {
+  let payload = {
+    courseCode: studentData.courseCode,
+    groupID: studentData.groupID,
+    classType: studentData.classType,
+    date: studentData.date,
+    status: studentData.status === 'Absent' ? 'Present' : 'Absent',
+    matricNo: studentData.matricNo,
+    acadYear: '2019',
+    semester: '1',
+    remarks: 'nil'
+  }
+
+  putData(
+    'http://ec2-3-15-165-103.us-east-2.compute.amazonaws.com/api',
+    '/updateStudentAttendance',
+    payload
+  ).then(result => console.log(result))
+}
+
 export const getPhoneNumFromMatricNum = async matricNum => {
   let response = await fetchData(
     'http://ec2-3-15-165-103.us-east-2.compute.amazonaws.com/api',
