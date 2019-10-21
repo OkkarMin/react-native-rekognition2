@@ -1,48 +1,48 @@
-import React, { useState, useEffect } from "react";
-import { FlatList, Text, View, StyleSheet, ScrollView } from "react-native";
-import ToggleButton from "../components/ToggleButton";
-import { fetchData, upperCaseArray } from "../utils/utils";
-import Colors from "../constants/Colors";
-
+import React, { useState, useEffect } from 'react'
+import { FlatList, Text, StyleSheet, ScrollView } from 'react-native'
 import {
   Collapse,
   CollapseHeader,
   CollapseBody
-} from "accordion-collapse-react-native";
-import { Separator } from "native-base";
+} from 'accordion-collapse-react-native'
+import { Separator } from 'native-base'
+
+import ToggleButton from '../components/ToggleButton'
+import { fetchData, upperCaseArray } from '../utils/utils'
+import Colors from '../constants/Colors'
 
 export default GroupScreen = props => {
-  const { navigation } = props;
-  const [attendanceList, setAttendance] = useState();
-  const [courseCodeNumber, setCourseCodeNumber] = useState();
-  const [groupNumber, setGroupNumber] = useState();
+  const { navigation } = props
+  const [attendanceList, setAttendance] = useState()
+  const [courseCodeNumber, setCourseCodeNumber] = useState()
+  const [groupNumber, setGroupNumber] = useState()
 
   useEffect(() => {
-    let arr = upperCaseArray(navigation.state.params.name);
-    //let arr = upperCaseArray("CZ3002/2019/1/TSA1");
-    let endPointURL = `/getGroupAttendance/${arr[0]}${arr[1]}`;
+    let arr = upperCaseArray(navigation.state.params.name)
+    let endPointURL = `/getGroupAttendance/${arr[0]}${arr[1]}`
     fetchData(
-      "http://ec2-3-15-165-103.us-east-2.compute.amazonaws.com/api",
+      'http://ec2-3-15-165-103.us-east-2.compute.amazonaws.com/api',
       endPointURL
     ).then(result => {
       result.sort((a, b) => {
-        return a.matricNo > b.matricNo;
-      });
-      setAttendance(result);
+        return a.matricNo > b.matricNo
+      })
+      setAttendance(result)
 
-      let arr2 = arr[0];
-      arr2 = arr2.split("/");
-      let arr3 = arr[1].split("/");
-      setCourseCodeNumber(arr2[0]);
-      setGroupNumber(arr3[0]);
-    });
-  }, []);
+      let arr2 = arr[0]
+      arr2 = arr2.split('/')
+      let arr3 = arr[1].split('/')
+      setCourseCodeNumber(arr2[0])
+      setGroupNumber(arr3[0])
+    })
+  }, [])
 
   return (
     <ScrollView style={styles.container}>
       <Text style={styles.greetings}>
-        Course Code: {courseCodeNumber} {"\n"} Group Number: {groupNumber}
+        Course Code: {courseCodeNumber} {'\n'} Group Number: {groupNumber}
       </Text>
+
       <Collapse>
         <CollapseHeader>
           <Separator bordered style={styles.cardContainer}>
@@ -56,7 +56,7 @@ export default GroupScreen = props => {
               data={attendanceList}
               renderItem={({ item }) => (
                 <ToggleButton
-                  value={item.status == "Present"}
+                  value={item.status == 'Present'}
                   data={item}
                   courseCode={courseCodeNumber}
                 />
@@ -66,6 +66,7 @@ export default GroupScreen = props => {
           )}
         </CollapseBody>
       </Collapse>
+
       <Collapse>
         <CollapseHeader>
           <Separator bordered style={styles.cardContainer}>
@@ -79,7 +80,7 @@ export default GroupScreen = props => {
               data={attendanceList}
               renderItem={({ item }) => (
                 <ToggleButton
-                  value={item.status != "Present"}
+                  value={item.status != 'Present'}
                   data={item}
                   courseCode={courseCodeNumber}
                 />
@@ -90,12 +91,12 @@ export default GroupScreen = props => {
         </CollapseBody>
       </Collapse>
     </ScrollView>
-  );
-};
+  )
+}
 
 GroupScreen.navigationOptions = {
   header: null
-};
+}
 
 const styles = StyleSheet.create({
   container: {
@@ -107,20 +108,20 @@ const styles = StyleSheet.create({
   },
   greetings: {
     fontSize: 25,
-    textAlign: "center",
+    textAlign: 'center',
     color: Colors.text
   },
   flatliststyle: {
     marginBottom: 30
   },
-  collectionName: { color: Colors.text, textAlign: "center", fontSize: 15 },
+  collectionName: { color: Colors.text, textAlign: 'center', fontSize: 15 },
   details: {
     flex: 5,
     marginTop: 100,
     fontSize: 20,
-    color: "#fff",
-    alignSelf: "flex-start",
-    width: "100%"
+    color: '#fff',
+    alignSelf: 'flex-start',
+    width: '100%'
   },
   cardContainer: { backgroundColor: Colors.background2, height: 50 }
-});
+})
