@@ -47,7 +47,22 @@ export const putData = async (url, endpoint, payload) => {
   }
 }
 
-export const getMatricNumFromCaptures = async captures => {
+export const getMatricNumFromCollection = async collectionName => {
+  let allStudentsInGroupMatricNumArray = []
+
+  let response = await fetchData(
+    'http://ec2-3-15-165-103.us-east-2.compute.amazonaws.com/api',
+    `/listFaces/${collectionName}`
+  )
+
+  response.Faces.map(face =>
+    allStudentsInGroupMatricNumArray.push(face.ExternalImageId)
+  )
+
+  return allStudentsInGroupMatricNumArray
+}
+
+export const getMatricNumFromCaptures = async (collectionName, captures) => {
   let detectedStudentsMatricNumArray = []
 
   await Promise.all(
@@ -57,9 +72,11 @@ export const getMatricNumFromCaptures = async captures => {
         image['base64']
       )
 
-      response.map(studentMatricNum =>
-        detectedStudentsMatricNumArray.push(studentMatricNum)
-      )
+      response.map(studentMatricNum => {
+        if (studentMatricNum.startsWith('U')) {
+          detectedStudentsMatricNumArray.push(studentMatricNum)
+        }
+      })
     })
   )
 

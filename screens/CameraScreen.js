@@ -15,7 +15,8 @@ import * as ImageManipulator from 'expo-image-manipulator'
 import CameraGallery from '../components/CameraGallery'
 import CameraToolbar from '../components/CameraToolbar'
 import {
-  detectFacesFromAWSCollection,
+  getMatricNumFromCaptures,
+  getMatricNumFromCollection,
   sendSMSToAbsentees
 } from '../utils/utils'
 import Colors from '../constants/Colors'
@@ -69,25 +70,29 @@ export default class CameraPage extends React.Component {
   }
 
   updateAttendanceFromCaptures = async collectionName => {
-    let detectedStudentsMatricNumArray = []
-
     this.setState({ updatingAttendance: true })
+    let detectedStudentsMatricNumArray = []
+    let allStudentsInGroupMatricNumArray = []
+    let absenteesMatricNumArray = []
 
-    await Promise.all(
-      this.state.captures.map(async image => {
-        let response = await detectFacesFromAWSCollection(
-          collectionName,
-          image['base64']
-        )
+    detectedStudentsMatricNumArray = await getMatricNumFromCaptures(
+      collectionName,
+      this.state.captures
+    )
 
-        response.map(studentMatricNum =>
-          detectedStudentsMatricNumArray.push(studentMatricNum)
-        )
-      })
+    allStudentsInGroupMatricNumArray = await getMatricNumFromCollection(
+      collectionName
+    )
+
+    absenteesMatricNumArray = allStudentsInGroupMatricNumArray.filter(
+      matricNum => !detectedStudentsMatricNumArray.includes(matricNum)
     )
 
     this.setState({ captures: [], updatingAttendance: false })
-    sendSMSToAbsentees(detectedStudentsMatricNumArray)
+
+    console.log(detectedStudentsMatricNumArray)
+    console.log(allStudentsInGroupMatricNumArray)
+    console.log(absenteesMatricNumArray)
   }
 
   async componentDidMount() {
