@@ -1,51 +1,51 @@
 export const upperCaseArray = input => {
-  let result = input.replace(/([A-Z]+)/g, ",$1").replace(/^,/, "");
-  return result.split(",");
-};
+  let result = input.replace(/([A-Z]+)/g, ',$1').replace(/^,/, '')
+  return result.split(',')
+}
 
 export const fetchData = async (url, endpoint) => {
   try {
-    let response = await fetch(`${url}${endpoint}`);
+    let response = await fetch(`${url}${endpoint}`)
 
-    return await response.json();
+    return await response.json()
   } catch (error) {
-    console.log(error);
+    console.log(error)
   }
-};
+}
 
 export const postData = async (url, endpoint, payload) => {
   try {
     let response = await fetch(`${url}${endpoint}`, {
-      method: "POST",
+      method: 'POST',
       headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json"
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
       },
       body: JSON.stringify(payload)
-    });
+    })
 
-    return await response.json();
+    return await response.json()
   } catch (error) {
-    console.log(error);
+    console.log(error)
   }
-};
+}
 
 export const putData = async (url, endpoint, payload) => {
   try {
     let response = await fetch(`${url}${endpoint}`, {
-      method: "PUT",
+      method: 'PUT',
       headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json"
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
       },
       body: JSON.stringify(payload)
-    });
+    })
 
-    return await response.json();
+    return await response.json()
   } catch (error) {
-    console.log(error);
+    console.log(error)
   }
-};
+}
 
 export const detectFacesFromAWSCollection = async (
   collectionName,
@@ -54,71 +54,73 @@ export const detectFacesFromAWSCollection = async (
   let payload = {
     collectionName,
     image: imageInBase64
-  };
+  }
 
   try {
     let response = await postData(
-      "http://ec2-3-15-165-103.us-east-2.compute.amazonaws.com/api",
-      "/detectFaces",
+      'http://ec2-3-15-165-103.us-east-2.compute.amazonaws.com/api',
+      '/detectFaces',
       payload
-    );
+    )
 
-    return response;
+    return response
   } catch (error) {
-    console.log(error);
+    console.log(error)
   }
-};
+}
 
 export const getPhoneNumFromMatricNum = async matricNum => {
   let response = await fetchData(
-    "http://ec2-3-15-165-103.us-east-2.compute.amazonaws.com/api",
+    'http://ec2-3-15-165-103.us-east-2.compute.amazonaws.com/api',
     `/getStudentInfo/${matricNum}`
-  );
+  )
 
-  return response.Item.contactNo;
-};
+  return response.Item.contactNo
+}
 
 export const sendSMS = async (message, phoneNumber) => {
   let payload = {
     message,
     phoneNumber: `+65${phoneNumber}`
-  };
+  }
 
   try {
     let response = await fetch(
-      "http://ec2-3-15-165-103.us-east-2.compute.amazonaws.com/api/sendSMS",
+      'http://ec2-3-15-165-103.us-east-2.compute.amazonaws.com/api/sendSMS',
       {
-        method: "POST",
+        method: 'POST',
         headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json"
+          Accept: 'application/json',
+          'Content-Type': 'application/json'
         },
         body: JSON.stringify(payload)
       }
-    );
+    )
 
-    console.log(await response.text());
+    console.log(await response.text())
   } catch (error) {
-    console.log(error);
+    console.log(error)
   }
-};
+}
 
 export const sendSMSToAbsentees = async absenteesMatricNumArray => {
-  let studentNumbersArray = [];
+  let studentNumbersArray = []
 
   await Promise.all(
     absenteesMatricNumArray.map(async matricNum => {
-      let phoneNum = await getPhoneNumFromMatricNum(matricNum);
-      studentNumbersArray.push(phoneNum);
+      if (matricNum.startsWith('U')) {
+        let phoneNum = await getPhoneNumFromMatricNum(matricNum)
+        studentNumbersArray.push(phoneNum)
+      }
     })
-  );
+  )
 
   studentNumbersArray.map(phoneNum => {
     sendSMS(
-      "You have been marked absent for a current ongoing course",
+      'You have been marked absent for a current ongoing course',
       phoneNum
-    );
+    )
 
-    console.log(phoneNum);
-  });
-};
+    console.log(phoneNum)
+  })
+}
