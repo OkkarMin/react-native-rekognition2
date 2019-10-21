@@ -31,7 +31,7 @@ export default class CameraPage extends React.Component {
   state = {
     ratio: '4:3',
     captures: [],
-    detecting: false,
+    updatingAttendance: false,
     capturing: null,
     hasCameraPermission: null,
     cameraType: Camera.Constants.Type.front,
@@ -71,7 +71,7 @@ export default class CameraPage extends React.Component {
   detectFacesFromCaptures = async collectionName => {
     let result = []
 
-    this.setState({ detecting: true })
+    this.setState({ updatingAttendance: true })
 
     await Promise.all(
       this.state.captures.map(async image => {
@@ -84,7 +84,7 @@ export default class CameraPage extends React.Component {
       })
     )
 
-    this.setState({ captures: [], detecting: false })
+    this.setState({ captures: [], updatingAttendance: false })
     sendSMSToAbsentees(result)
   }
 
@@ -111,7 +111,7 @@ export default class CameraPage extends React.Component {
       cameraType,
       capturing,
       captures,
-      detecting,
+      updatingAttendance,
       ratio
     } = this.state
 
@@ -128,14 +128,14 @@ export default class CameraPage extends React.Component {
       <React.Fragment>
         <View>
           <Overlay
-            isVisible={detecting}
+            isVisible={updatingAttendance}
             windowBackgroundColor="rgba(255, 255, 255, .9)"
             overlayBackgroundColor="rgba(0,0,0,.6)"
             width="auto"
             height="auto"
           >
             <React.Fragment>
-              <Text style={styles.overlayText}>Updating Attendance</Text>
+              <Text style={styles.updatingText}>Updating Attendance</Text>
               <ActivityIndicator size="large" color="white" />
             </React.Fragment>
           </Overlay>
@@ -183,5 +183,5 @@ const styles = StyleSheet.create({
     right: 0,
     bottom: 0
   },
-  overlayText: { fontSize: 20, marginBottom: 10, color: Colors.text }
+  updatingText: { fontSize: 20, marginBottom: 10, color: Colors.text }
 })
