@@ -47,6 +47,25 @@ export const putData = async (url, endpoint, payload) => {
   }
 }
 
+export const getMatricNumFromCaptures = async captures => {
+  let detectedStudentsMatricNumArray = []
+
+  await Promise.all(
+    captures.map(async image => {
+      let response = await detectFacesFromAWSCollection(
+        collectionName,
+        image['base64']
+      )
+
+      response.map(studentMatricNum =>
+        detectedStudentsMatricNumArray.push(studentMatricNum)
+      )
+    })
+  )
+
+  return detectedStudentsMatricNumArray
+}
+
 export const detectFacesFromAWSCollection = async (
   collectionName,
   imageInBase64
@@ -124,18 +143,18 @@ export const sendSMS = async (message, phoneNumber) => {
 }
 
 export const sendSMSToAbsentees = async absenteesMatricNumArray => {
-  let studentNumbersArray = []
+  let studentPhoneNumArray = []
 
   await Promise.all(
     absenteesMatricNumArray.map(async matricNum => {
       if (matricNum.startsWith('U')) {
         let phoneNum = await getPhoneNumFromMatricNum(matricNum)
-        studentNumbersArray.push(phoneNum)
+        studentPhoneNumArray.push(phoneNum)
       }
     })
   )
 
-  studentNumbersArray.map(phoneNum => {
+  studentPhoneNumArray.map(phoneNum => {
     sendSMS(
       'You have been marked absent for a current ongoing course',
       phoneNum

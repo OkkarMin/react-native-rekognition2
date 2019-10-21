@@ -68,8 +68,8 @@ export default class CameraPage extends React.Component {
     })
   }
 
-  detectFacesFromCaptures = async collectionName => {
-    let result = []
+  updateAttendanceFromCaptures = async collectionName => {
+    let detectedStudentsMatricNumArray = []
 
     this.setState({ updatingAttendance: true })
 
@@ -80,12 +80,14 @@ export default class CameraPage extends React.Component {
           image['base64']
         )
 
-        response.map(each => result.push(each))
+        response.map(studentMatricNum =>
+          detectedStudentsMatricNumArray.push(studentMatricNum)
+        )
       })
     )
 
     this.setState({ captures: [], updatingAttendance: false })
-    sendSMSToAbsentees(result)
+    sendSMSToAbsentees(detectedStudentsMatricNumArray)
   }
 
   async componentDidMount() {
@@ -153,7 +155,7 @@ export default class CameraPage extends React.Component {
           <CameraGallery
             captures={captures}
             collectionEndpoint={collectionName}
-            onCheckMarkPress={this.detectFacesFromCaptures}
+            onCheckMarkPress={this.updateAttendanceFromCaptures}
           />
         )}
 
