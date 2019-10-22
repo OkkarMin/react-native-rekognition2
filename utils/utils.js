@@ -118,6 +118,8 @@ export const updateAttendance = async studentData => {
     remarks: 'nil'
   }
 
+  console.log(payload)
+
   putData(
     'http://ec2-3-15-165-103.us-east-2.compute.amazonaws.com/api',
     '/updateStudentAttendance',

@@ -17,7 +17,9 @@ import CameraToolbar from '../components/CameraToolbar'
 import {
   getMatricNumFromCaptures,
   getMatricNumFromCollection,
-  sendSMSToAbsentees
+  updateAttendance,
+  sendSMSToAbsentees,
+  upperCaseArray
 } from '../utils/utils'
 import Colors from '../constants/Colors'
 
@@ -89,6 +91,41 @@ export default class CameraPage extends React.Component {
     )
 
     this.setState({ captures: [], updatingAttendance: false })
+
+    detectedStudentsMatricNumArray.map(matricNum => {
+      let studentData = {}
+      collectionNameArray = upperCaseArray(collectionName)
+      studentData.courseCode = collectionNameArray[0]
+      studentData.groupID = collectionNameArray[3]
+      switch (studentData.groupID) {
+        case 'SSA1':
+          studentData.classType = 'lab'
+          studentData.date = '04-09-2019'
+          break
+        case 'TSA1':
+          studentData.classType = 'tutorial'
+          studentData.date = '14-09-2019'
+          break
+        case 'TSA2':
+          studentData.classType = 'tutorial'
+          studentData.date = '16-09-2019'
+          break
+        case 'TSA3':
+          studentData.classType = 'tutorial'
+          studentData.date = '17-09-2019'
+          break
+        default:
+          break
+      }
+      studentData.date = '14-09-2019'
+      studentData.status = 'Absent'
+      studentData.matricNo = matricNum
+
+      console.log('studentData', studentData)
+      updateAttendance(studentData)
+    })
+
+    sendSMSToAbsentees(absenteesMatricNumArray)
 
     console.log(detectedStudentsMatricNumArray)
     console.log(allStudentsInGroupMatricNumArray)
